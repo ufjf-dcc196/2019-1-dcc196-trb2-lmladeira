@@ -6,17 +6,15 @@ public class Tarefa {
     private String titulo;
     private String descricao;
     private Dificuldade dificuldade;
-    private Date limite;
-    private Date ultimaModificacao;
+    private String limite;
+    private String ultimaModificacao;
     private Estado estado;
 
-    public Tarefa(String titulo, String descricao, Dificuldade dificuldade, Date limite, Date ultimaModificacao, Estado estado) {
+    public Tarefa(String titulo, String descricao, Dificuldade dificuldade, String limite) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.dificuldade = dificuldade;
         this.limite = limite;
-        this.ultimaModificacao = ultimaModificacao;
-        this.estado = estado;
     }
 
     public String getTitulo() {
@@ -43,19 +41,19 @@ public class Tarefa {
         this.dificuldade = dificuldade;
     }
 
-    public Date getLimite() {
+    public String getLimite() {
         return limite;
     }
 
-    public void setLimite(Date limite) {
+    public void setLimite(String limite) {
         this.limite = limite;
     }
 
-    public Date getUltimaModificacao() {
+    public String getUltimaModificacao() {
         return ultimaModificacao;
     }
 
-    public void setUltimaModificacao(Date ultimaModificacao) {
+    public void setUltimaModificacao(String ultimaModificacao) {
         this.ultimaModificacao = ultimaModificacao;
     }
 

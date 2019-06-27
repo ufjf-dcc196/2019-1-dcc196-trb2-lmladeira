@@ -59,12 +59,24 @@
 
 
         <TextView
-            android:id="@+id/textmModificacao"
+            android:id="@+id/textModificacao"
             android:layout_width="20dp"
             android:padding="5dp"
             android:text="mod" />
 
     </TableRow>
 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/textDificuldade"
+        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:padding="5dp"
+        android:layout_span="2"
+        android:text="dificuldade"/>
+
+    </TableRow>
 </TableLayout>

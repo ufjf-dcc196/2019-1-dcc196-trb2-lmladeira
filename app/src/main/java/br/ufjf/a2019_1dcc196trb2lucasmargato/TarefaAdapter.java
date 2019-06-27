@@ -1,6 +1,7 @@
 package br.ufjf.a2019_1dcc196trb2lucasmargato;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,17 +12,20 @@ import android.widget.TextView;
 import java.util.List;
 
 public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.ViewHolder> {
-    private final List<Tarefa> items;
+    private Cursor cursor;
     private OnItemClickListener listener;
 
-    public TarefaAdapter(List<Tarefa> items) {
-        this.items = items;
+    public TarefaAdapter(Cursor c) {
+        this.cursor = c;
     }
 
     public interface OnItemClickListener {
         void onItemClick(View itemView, int position);
     }
-
+    public void setCursor(Cursor c){
+        this.cursor = c;
+        notifyDataSetChanged();
+    }
     public void setOnItemClickListener(OnItemClickListener listener) { this.listener = listener; }
 
     @NonNull
@@ -37,23 +41,34 @@ public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TarefaAdapter.ViewHolder viewHolder, int i) {
-        Tarefa t = items.get(i);
-        TextView itemTitulo = viewHolder.itemTitulo;
-        TextView itemLimite = viewHolder.itemLimite;
-        TextView itemDescricao = viewHolder.itemDescricao;
-        TextView itemEstado = viewHolder.itemEstado;
-        TextView itemModificacao = viewHolder.itemModificacao;
+        int idxTitulo = cursor.getColumnIndexOrThrow(TarefasContract.Tarefa.COLLUMN_TITULO);
+        int idxDescricao = cursor.getColumnIndexOrThrow(TarefasContract.Tarefa.COLLUMN_DESCRICAO);
+        int idxDificuldade = cursor.getColumnIndexOrThrow(TarefasContract.Tarefa.COLLUMN_DIFICULDADE);
+        int idxLimite = cursor.getColumnIndexOrThrow(TarefasContract.Tarefa.COLLUMN_LIMITE);
+        int idxModificacao = cursor.getColumnIndexOrThrow(TarefasContract.Tarefa.COLLUMN_ULTIMAMODIFICACAO);
+        int idxEstado = cursor.getColumnIndexOrThrow(TarefasContract.Tarefa.COLLUMN_ESTADO);
+
+        cursor.moveToPosition(i);
+
+        viewHolder.itemTitulo.setText(cursor.getString(idxTitulo));
+        viewHolder.itemLimite.setText(cursor.getString(idxLimite));
+        viewHolder.itemDescricao.setText(cursor.getString(idxDescricao));
+        viewHolder.itemEstado.setText(cursor.getString(idxEstado));
+        viewHolder.itemDificuldade.setText(cursor.getString(idxDificuldade));
+        viewHolder.itemModificacao.setText(cursor.getString(idxModificacao));
+        viewHolder.itemTitulo.setText(cursor.getString(idxTitulo));
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return cursor.getCount();
     }
 
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView itemTitulo, itemLimite, itemDescricao, itemEstado, itemModificacao;
+        public TextView itemTitulo, itemLimite, itemDescricao, itemEstado, itemModificacao, itemDificuldade;
 
 
         public ViewHolder(@NonNull final View itemView) {
@@ -62,7 +77,8 @@ public class TarefaAdapter extends RecyclerView.Adapter<TarefaAdapter.ViewHolder
             itemLimite = itemView.findViewById(R.id.textLimite);
             itemDescricao = itemView.findViewById(R.id.textDescricao);
             itemEstado = itemView.findViewById(R.id.textEstado);
-            itemModificacao = itemView.findViewById(R.id.textmModificacao);
+            itemModificacao = itemView.findViewById(R.id.textModificacao);
+            itemDificuldade = itemView.findViewById(R.id.textDificuldade);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
